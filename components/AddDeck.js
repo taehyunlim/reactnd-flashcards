@@ -17,6 +17,9 @@ class AddDeck extends Component {
   }
 
   handleOnPress = () => {
+    if (!(this.state.input.trim().length > 0)) {
+      return
+    }
     console.log("Submitted")
     this.setState(() => ({
       input: ''
@@ -31,7 +34,6 @@ class AddDeck extends Component {
         <Text style={styles.header}>Add a New Deck</Text>
         <TextInput style={styles.input} value={input} onChangeText={(input) => this.setState({ input })} onSubmitEditing={this.handleOnPress} />
         <TouchableOpacity
-          disabled={!(input.length > 0)}
           style={[styles.button, { backgroundColor: teal }]}
           onPress={this.handleOnPress}
         >
