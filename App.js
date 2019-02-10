@@ -1,11 +1,84 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, Platform, StatusBar } from 'react-native';
+import { createAppContainer, createMaterialTopTabNavigator, createBottomTabNavigator, createStackNavigator } from 'react-navigation'
+import { matte, white, watermelon, fresh, teal } from './utils/colors'
+import ListDeck from './components/ListDeck'
+import AddDeck from './components/AddDeck'
+import ViewDeck from './components/ViewDeck'
+import { FontAwesome, Ionicons } from '@expo/vector-icons'
+import { Constants } from 'expo'
 
-export default class App extends React.Component {
+function CustomStatusBar({ backgroundColor, ...props }) {
+  return (
+    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
+      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+    </View>
+  )
+}
+
+const Tabs = createAppContainer(createMaterialTopTabNavigator({
+  Decks: {
+    screen: ListDeck,
+    navigationOptions: {
+      tabBarLabel: 'Decks',
+      tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-square' size={30} color={tintColor} />
+    }
+  },
+  AddDeck: {
+    screen: AddDeck,
+    navigationOptions: {
+      tabBarLabel: 'Add a Deck',
+      tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-square' size={30} color={tintColor} />
+    }
+  }
+}, {
+    navigationOptions: {
+      header: null
+    },
+    tabBarOptions: {
+      activeTintColor: Platform.OS === 'ios' ? matte : white,
+      style: {
+        height: 56,
+        backgroundColor: Platform.OS === 'ios' ? white : matte,
+        shadowColor: 'rgba(0, 0, 0, 0.2)',
+        shadowOffset: {
+          width: 0,
+          height: 3
+        },
+        shadowRadius: 6,
+        shadowOpacity: 1
+      },
+      indicatorStyle: {
+        backgroundColor: fresh
+      }
+    }
+  }))
+
+const MainNavigator = createAppContainer(createStackNavigator({
+  Home: {
+    screen: Tabs,
+    navigationOptions: {
+      header: null
+    }
+  },
+  ViewDeck: {
+    screen: ViewDeck,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: matte
+      }
+    }
+  }
+}))
+
+export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
+        <CustomStatusBar backgroundColor={teal} barStyle='light-content' />
+        <MainNavigator />
+
       </View>
     );
   }
@@ -13,9 +86,7 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    flex: 1
+  }
 });
+
