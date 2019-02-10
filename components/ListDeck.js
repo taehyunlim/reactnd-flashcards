@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native'
-import { white, fresh } from '../utils/colors'
+import { white, fresh, matte } from '../utils/colors'
 
 class ListDeck extends Component {
   state = {
