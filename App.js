@@ -5,6 +5,8 @@ import { matte, white, watermelon, fresh, teal } from './utils/colors'
 import ListDeck from './components/ListDeck'
 import AddDeck from './components/AddDeck'
 import ViewDeck from './components/ViewDeck'
+import AddCard from './components/AddCard'
+import Quiz from './components/Quiz'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { Constants } from 'expo'
 
@@ -63,6 +65,24 @@ const MainNavigator = createAppContainer(createStackNavigator({
   },
   ViewDeck: {
     screen: ViewDeck,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: matte
+      }
+    }
+  },
+  AddCard: {
+    screen: AddCard,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: matte
+      }
+    }
+  },
+  Quiz: {
+    screen: Quiz,
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {
