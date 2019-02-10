@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Switch, TextInput, KeyboardAvoidingView } from 'react-native'
+import { View, Text, StyleSheet, Switch, TextInput, KeyboardAvoidingView, TouchableOpacity } from 'react-native'
 import { fresh, teal, white, matte } from '../utils/colors'
 import { timeToString } from '../utils/helpers'
 import { connect } from "react-redux";
@@ -8,34 +8,37 @@ class AddDeck extends Component {
 
   state = {
     input: '',
-    showInput: false
-  }
-
-  handleToggleSwitch = () => {
-    this.setState((state) => ({
-      showInput: !state.showInput,
-    }))
   }
 
   handleTextChange = (input) => {
     this.setState(() => ({
-      input
+      input: input
+    }))
+  }
+
+  handleOnPress = () => {
+    console.log("Submitted")
+    this.setState(() => ({
+      input: ''
     }))
   }
 
   render() {
-
-    const { input, showInput } = this.state
+    const { input } = this.state
 
     return (
       <KeyboardAvoidingView behavior='padding' style={styles.container}>
-        <Text>Add Deck</Text>
-        <Switch value={showInput} onValueChange={this.handleToggleSwitch} />
-        {showInput === true && (
-          <TextInput style={styles.input} value={input} onChange={this.handleTextChange} />)}
+        <Text style={styles.header}>Add a New Deck</Text>
+        <TextInput style={styles.input} value={input} onChangeText={(input) => this.setState({ input })} onSubmitEditing={this.handleOnPress} />
+        <TouchableOpacity
+          disabled={!(input.length > 0)}
+          style={[styles.button, { backgroundColor: teal }]}
+          onPress={this.handleOnPress}
+        >
+          <Text style={styles.buttonText}>SUBMIT</Text>
+        </TouchableOpacity>
       </KeyboardAvoidingView>
     )
-
   }
 
 }
@@ -45,8 +48,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 25,
-    backgroundColor: white,
+  },
+  header: {
+    paddingTop: 20,
+    fontSize: 35,
+    textAlign: 'center',
   },
   input: {
     width: 300,
@@ -54,7 +60,22 @@ const styles = StyleSheet.create({
     padding: 8,
     borderWidth: 1,
     borderColor: matte,
-    margin: 50
+    marginTop: 50,
+    marginBottom: 25
+  },
+  button: {
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 25,
+    paddingRight: 25,
+    alignSelf: 'center',
+    borderRadius: 5,
+    margin: 10
+  },
+  buttonText: {
+    color: white,
+    fontSize: 20,
+    paddingBottom: 5
   }
 })
 
