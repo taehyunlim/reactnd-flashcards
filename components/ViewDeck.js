@@ -17,21 +17,24 @@ class ViewDeck extends Component {
 
     return (
       <View style={styles.container}>
-        <Text>View an Individual Deck</Text>
-        <Text>? cards</Text>
-        <TouchableOpacity
-          style={[styles.button, { backgroundColor: teal }]}
-          onPress={() => this.props.navigation.navigate('AddCard', { id: "test" })}
-        >
-          <Text style={styles.buttonText}>Add Card</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, { backgroundColor: watermelon }]}
-          onPress={() => this.props.navigation.navigate('Quiz', { id: "test" })}
-        >
-          <Text style={styles.buttonText}>Start Quiz</Text>
-        </TouchableOpacity>
-
+        <View style={styles.headerContainer}>
+          <Text style={styles.header}>View an Individual Deck</Text>
+          <Text style={styles.subHeader}>? cards</Text>
+        </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={[styles.button, { backgroundColor: teal }]}
+            onPress={() => this.props.navigation.navigate('AddCard', { id: "test" })}
+          >
+            <Text style={styles.buttonText}>Add Card</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, { backgroundColor: teal }]}
+            onPress={() => this.props.navigation.navigate('Quiz', { id: "test" })}
+          >
+            <Text style={styles.buttonText}>Start Quiz</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     )
 
@@ -45,31 +48,40 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  item: {
-    borderRadius: 10,
-    padding: 20,
-    marginLeft: 5,
-    marginRight: 5,
-    marginTop: 7,
+  headerContainer: {
+    flex: 1,
     justifyContent: 'center',
-    shadowRadius: 3,
-    shadowOpacity: 0.8,
-    shadowColor: 'rgba(0, 0, 0, 0.24)',
-    shadowOffset: {
-      width: 0,
-      height: 3
-    },
-    color: white
+    alignItems: 'center',
+    margin: 20
+  },
+  buttonContainer: {
+    flex: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  header: {
+    paddingTop: 20,
+    fontSize: 35,
+    textAlign: 'center',
+  },
+  subHeader: {
+    fontSize: 25,
+    textAlign: 'center',
+    marginTop: 5,
   },
   button: {
-    padding: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 25,
+    paddingRight: 25,
     alignSelf: 'center',
     borderRadius: 5,
-    margin: 20
+    margin: 10
   },
   buttonText: {
     color: white,
     fontSize: 20,
+    paddingBottom: 5
   }
 })
 
