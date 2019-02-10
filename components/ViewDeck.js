@@ -37,7 +37,6 @@ class ViewDeck extends Component {
         </View>
       </View>
     )
-
   }
 
 }

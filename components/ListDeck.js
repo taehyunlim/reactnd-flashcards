@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native'
-import { white, fresh, matte } from '../utils/colors'
+import { white, fresh, matte, gray } from '../utils/colors'
 
 class ListDeck extends Component {
   state = {
@@ -40,25 +40,22 @@ class ListDeck extends Component {
     // const { dispatch }
   }
 
-
-
-  renderDeck = (deck) => (
-    <TouchableOpacity
-      style={styles.item} key={deck.id}
-      onPress={() => this.props.navigation.navigate('ViewDeck', { id: deck.id })}
-    >
-      <Text>{deck.name}</Text>
-      <Text>{deck.cards.length} cards</Text>
-    </TouchableOpacity>
-  )
-
   render() {
     const { decks, ready } = this.state
 
     return (
       <View style={{ flex: 1 }}>
         {decks.map(deck => {
-          return this.renderDeck(deck)
+          const { name, id, cards } = deck
+          return (
+            <TouchableOpacity
+              style={styles.item} key={id}
+              onPress={() => this.props.navigation.navigate('ViewDeck', { id: id })}
+            >
+              <Text style={{ fontSize: 20 }}>{name}</Text>
+              <Text style={{ fontSize: 16, color: gray }}>{cards.length} cards</Text>
+            </TouchableOpacity>
+          )
         })}
       </View>
     )
@@ -76,6 +73,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginTop: 17,
     justifyContent: 'center',
+    alignItems: 'center',
     shadowRadius: 3,
     shadowOpacity: 0.8,
     shadowColor: 'rgba(0, 0, 0, 0.24)',
