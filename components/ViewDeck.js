@@ -4,6 +4,14 @@ import { View, Text, StyleSheet } from 'react-native'
 
 
 class ViewDeck extends Component {
+  static navigationOPtions = ({ navigation }) => {
+    const { id } = navigation.state.params
+    console.log(id)
+
+    return {
+      title: `Deck ID: ${id}`
+    }
+  }
 
   render() {
 

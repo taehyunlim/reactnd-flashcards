@@ -76,7 +76,7 @@ export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <CustomStatusBar backgroundColor={teal} barStyle='light-content' />
+        <CustomStatusBar backgroundColor={matte} barStyle='light-content' />
         <MainNavigator />
 
       </View>
