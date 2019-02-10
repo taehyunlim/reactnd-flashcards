@@ -56,7 +56,7 @@ class ListDeck extends Component {
     const { decks, ready } = this.state
 
     return (
-      <View>
+      <View style={{ flex: 1 }}>
         {decks.map(deck => {
           return this.renderDeck(deck)
         })}

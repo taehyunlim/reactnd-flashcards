@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Switch, TextInput } from 'react-native'
+import { View, Text, StyleSheet, Switch, TextInput, KeyboardAvoidingView } from 'react-native'
 import { fresh, teal, white, matte } from '../utils/colors'
 import { timeToString } from '../utils/helpers'
 import { connect } from "react-redux";
@@ -28,12 +28,12 @@ class AddDeck extends Component {
     const { input, showInput } = this.state
 
     return (
-      <View>
+      <KeyboardAvoidingView behavior='padding' style={styles.container}>
         <Text>Add Deck</Text>
         <Switch value={showInput} onValueChange={this.handleToggleSwitch} />
         {showInput === true && (
-          <TextInput style={styles.textInput} value={input} onChange={this.handleTextChange} />)}
-      </View>
+          <TextInput style={styles.input} value={input} onChange={this.handleTextChange} />)}
+      </KeyboardAvoidingView>
     )
 
   }
@@ -41,12 +41,20 @@ class AddDeck extends Component {
 }
 
 const styles = StyleSheet.create({
-  textInput: {
+  container: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 25,
-    backgroundColor: fresh,
-    color: matte
+    backgroundColor: white,
+  },
+  input: {
+    width: 300,
+    height: 44,
+    padding: 8,
+    borderWidth: 1,
+    borderColor: matte,
+    margin: 50
   }
 })
 
