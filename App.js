@@ -9,6 +9,9 @@ import AddCard from './components/AddCard'
 import Quiz from './components/Quiz'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { Constants } from 'expo'
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import reducers from './reducers'
 
 function CustomStatusBar({ backgroundColor, ...props }) {
   return (
@@ -95,11 +98,12 @@ const MainNavigator = createAppContainer(createStackNavigator({
 export default class App extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <CustomStatusBar backgroundColor={matte} barStyle='light-content' />
-        <MainNavigator />
-
-      </View>
+      <Provider store={createStore(reducers)}>
+        <View style={styles.container}>
+          <CustomStatusBar backgroundColor={matte} barStyle='light-content' />
+          <MainNavigator />
+        </View>
+      </Provider>
     );
   }
 }
