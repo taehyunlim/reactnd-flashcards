@@ -54,7 +54,7 @@ const Tabs = createAppContainer(createMaterialTopTabNavigator({
         shadowOpacity: 1
       },
       indicatorStyle: {
-        backgroundColor: fresh
+        backgroundColor: white
       }
     }
   }))
@@ -69,9 +69,9 @@ const MainNavigator = createAppContainer(createStackNavigator({
   ViewDeck: {
     screen: ViewDeck,
     navigationOptions: {
-      headerTintColor: white,
+      headerTintColor: matte,
       headerStyle: {
-        backgroundColor: matte
+        backgroundColor: fresh
       }
     }
   },
@@ -80,7 +80,7 @@ const MainNavigator = createAppContainer(createStackNavigator({
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {
-        backgroundColor: matte
+        backgroundColor: teal
       }
     }
   },
