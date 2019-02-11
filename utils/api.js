@@ -55,3 +55,12 @@ export function submitDeck({ deck, id }) {
     })
   )
 }
+
+export function deleteDeck(id) {
+  return AsyncStorage.getItem(DECK_STORAGE_KEY).then(res => {
+    const data = JSON.parse(res)
+    data[id] = undefined
+    delete data[id]
+    AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(data))
+  })
+}
