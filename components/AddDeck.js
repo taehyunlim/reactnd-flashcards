@@ -2,7 +2,10 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, Switch, TextInput, KeyboardAvoidingView, TouchableOpacity } from 'react-native'
 import { fresh, teal, white, matte } from '../utils/colors'
 import { timeToString } from '../utils/helpers'
-import { connect } from "react-redux";
+import { connect } from 'react-redux'
+import { receiveDecks, addDeck } from '../actions'
+import { submitDeck } from '../utils/api'
+import { NavigationActions } from 'react-navigation'
 
 class AddDeck extends Component {
 
@@ -17,9 +20,27 @@ class AddDeck extends Component {
   }
 
   handleOnPress = () => {
-    if (!(this.state.input.trim().length > 0)) {
+    if (!(this.state.input.trim())) {
       return
     }
+
+    const id = 'deck_' + timeToString()
+    const deck = {
+      "name": this.state.input.trim(),
+      "card": []
+    }
+
+    this.props.dispatch(
+      addDeck({
+        [id]: deck
+      })
+    )
+
+    // To Do
+    this.props.navigation.goBack()
+
+    submitDeck({ id, deck });
+
     console.log("Submitted")
     this.setState(() => ({
       input: ''
@@ -27,6 +48,7 @@ class AddDeck extends Component {
   }
 
   render() {
+    const { testProp } = this.props
     const { input } = this.state
 
     return (
@@ -81,11 +103,10 @@ const styles = StyleSheet.create({
   }
 })
 
-function mapStateToProps(state) {
-  const id = timeToString()
+function mapDispatchToProps(dispatch, { navigation }) {
   return {
-    id
+    navigation
   }
 }
 
-export default connect(mapStateToProps)(AddDeck)
+export default connect(mapDispatchToProps)(AddDeck)
