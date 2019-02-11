@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { white, fresh, matte, watermelon, teal } from '../utils/colors'
 import { connect } from 'react-redux'
 import { deleteDeck } from '../utils/api'
+import { receiveDecks } from '../actions'
+import { fetchDecks } from '../utils/api'
 
 class ViewDeck extends Component {
 
@@ -11,13 +13,14 @@ class ViewDeck extends Component {
     return { title: `${name}` }
   };
 
-  delete = (id) => {
-    deleteDeck(id)
+  // TO DO: Somewhat broken - Does not fetch new dispatch
+  delete = () => {
+    const { id } = this.props
+    // API
+    deleteDeck(id, this.props.refresh)
+    // Navigate back to ListDeck
+    this.props.navigation.goBack()
   }
-
-  // shouldComponentUpdate(nextProps) {
-  //   return nextProps.id !== null && nextProps.deck
-  // }
 
   render() {
 
@@ -48,7 +51,7 @@ class ViewDeck extends Component {
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.button, { backgroundColor: teal }]}
-            onPress={() => this.delete(id)}
+            onPress={this.delete}
           >
             <Text style={styles.buttonText}>Delete</Text>
           </TouchableOpacity>
@@ -115,6 +118,7 @@ function mapDispatchToProps(dispatch, { navigation }) {
   const { id } = navigation.state.params
   console.log(id)
   return {
+    refresh: () => fetchDecks().then((decks) => dispatch(receiveDecks(decks))),
     goBack: () => navigation.goBack()
   }
 }
