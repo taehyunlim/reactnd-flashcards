@@ -54,7 +54,7 @@ const Tabs = createAppContainer(createMaterialTopTabNavigator({
         shadowOpacity: 1
       },
       indicatorStyle: {
-        backgroundColor: white
+        backgroundColor: fresh
       }
     }
   }))
