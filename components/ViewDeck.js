@@ -21,7 +21,7 @@ class ViewDeck extends Component {
 
   render() {
 
-    const { id, deck } = this.props
+    const { id, name, deck } = this.props
 
     return (
       <View style={styles.container}>
@@ -36,13 +36,13 @@ class ViewDeck extends Component {
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={[styles.button, { backgroundColor: teal }]}
-            onPress={() => this.props.navigation.navigate('AddCard', { id, name })}
+            onPress={() => this.props.navigation.navigate('AddCard', { id: id, name: name })}
           >
             <Text style={styles.buttonText}>Add Card</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.button, { backgroundColor: teal }]}
-            onPress={() => this.props.navigation.navigate('Quiz', { id, name })}
+            onPress={() => this.props.navigation.navigate('Quiz', { id: id, name: name })}
           >
             <Text style={styles.buttonText}>Start Quiz</Text>
           </TouchableOpacity>
@@ -103,9 +103,10 @@ const styles = StyleSheet.create({
 })
 
 function mapStateToProp(state, { navigation }) {
-  const { id } = navigation.state.params
+  const { id, name } = navigation.state.params
   return {
     id,
+    name,
     deck: state[id]
   }
 }
