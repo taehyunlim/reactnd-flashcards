@@ -3,50 +3,75 @@ import { View, Text, StyleSheet, TextInput, KeyboardAvoidingView, TouchableOpaci
 import { fresh, teal, white, matte } from '../utils/colors'
 import { timeToString } from '../utils/helpers'
 import { connect } from "react-redux";
+import { receiveDeck } from '../actions'
+import { submitCard } from '../utils/api'
 
 
 class AddCard extends Component {
 
-  static navigationOptions = {
-    title: 'New Card',
+  static navigationOptions = ({ navigation }) => {
+    const { name } = navigation.state.params
+    return { title: `Add a card for ${name}` }
   };
 
   state = {
-    qInput: '',
-    aInput: '',
+    q: '',
+    a: '',
   }
 
   qHandleTextChange = (input) => {
     this.setState(() => ({
-      qInput: input
+      q: input
     }))
   }
 
   aHandleTextChange = (input) => {
     this.setState(() => ({
-      aInput: input
+      a: input
     }))
   }
 
   handleOnPress = () => {
-    if (!(this.state.qInput.trim().length > 0) && !(this.state.aInput.trim().length > 0)) {
+    if (!(this.state.q.trim().length > 0) || !(this.state.a.trim().length > 0)) {
       return
     }
     console.log("Submitted")
+
+    const { q, a } = this.state
+    let { deck, id } = this.props
+
+    const newDeck = {
+      [id]: {
+        ...deck,
+        cards: deck["cards"] ? deck["cards"].concat([{ q, a }]) : [{ q, a }]
+      }
+    }
+    console.log(newDeck)
+
+    // API 
+    submitCard(id, { q, a })
+
+    // Redux
+    this.props.dispatch(
+      receiveDeck(newDeck)
+    )
+    // Navigate back to ViewDeck 
+    this.props.navigation.goBack()
+
     this.setState(() => ({
-      qInput: '',
-      aInput: '',
+      q: '',
+      a: '',
     }))
   }
 
   render() {
-    const { qInput, aInput } = this.state
+    const { q, a } = this.state
 
     return (
       <KeyboardAvoidingView behavior='padding' style={styles.container}>
         <Text style={styles.header}>Add a New Card</Text>
-        <TextInput style={styles.input} value={qInput} onChangeText={(input) => this.setState({ qInput: input })} />
-        <TextInput style={styles.input} value={aInput} onChangeText={(input) => this.setState({ aInput: input })} />
+        <TextInput style={styles.input} value={q} onChangeText={(input) => this.setState({ q: input })} />
+        <TextInput style={styles.input} value={a} onChangeText={(input) => this.setState({ a: input })} />
         <TouchableOpacity
           style={[styles.button, { backgroundColor: teal }]}
           onPress={this.handleOnPress}
@@ -96,4 +121,13 @@ const styles = StyleSheet.create({
   }
 })
 
-export default AddCard
+function mapStateToProp(state, { navigation }) {
+  const { id, name } = navigation.state.params
+  return {
+    id,
+    name,
+    deck: state[id]
+  }
+}
+
+export default connect(mapStateToProp)(AddCard)
