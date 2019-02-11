@@ -37,6 +37,14 @@ class Quiz extends Component {
     }))
   }
 
+  reset = () => {
+    this.setState(() => ({
+      currentCount: 1,
+      correct: 0,
+      showAnswer: false
+    }))
+  }
+
   renderCard = (card, index) => {
     const { showAnswer } = this.state
     return (
@@ -84,7 +92,17 @@ class Quiz extends Component {
           }
         })}
         {currentCount == cards.length + 1 &&
-          (<Text style={[styles.subHeader, { flex: 1 }]}>You answered {correct} correctly {"\n"}out of {cards.length} questions.</Text>)
+          (<View style={{ flex: 1 }}>
+            <Text style={[styles.subHeader]}>You answered {correct} correctly {"\n"}out of {cards.length} questions.</Text>
+            <TouchableOpacity
+              style={[styles.button, { backgroundColor: white }]}
+              onPress={this.reset}
+            >
+              <Text style={[styles.buttonText, { color: watermelon, fontSize: 15, paddingBottom: 50 }]}>
+                Restart
+              </Text>
+            </TouchableOpacity>
+          </View>)
         }
       </View>
     )
