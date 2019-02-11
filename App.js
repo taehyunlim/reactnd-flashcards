@@ -75,6 +75,24 @@ const MainNavigator = createAppContainer(createStackNavigator({
       }
     }
   },
+  AddDeck: {
+    screen: AddDeck,
+    navigationOptions: {
+      headerTintColor: matte,
+      headerStyle: {
+        backgroundColor: fresh
+      }
+    }
+  },
+  ListDeck: {
+    screen: ListDeck,
+    navigationOptions: {
+      headerTintColor: matte,
+      headerStyle: {
+        backgroundColor: fresh
+      }
+    }
+  },
   AddCard: {
     screen: AddCard,
     navigationOptions: {
