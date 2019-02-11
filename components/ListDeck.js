@@ -1,59 +1,49 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native'
+import { connect } from 'react-redux'
+import { receiveDecks, addDeck } from '../actions'
+import { timeToString } from '../utils/helpers'
+import { fetchDecks } from '../utils/api'
 import { white, fresh, matte, gray } from '../utils/colors'
+import { AppLoading } from 'expo'
 
 class ListDeck extends Component {
   state = {
     ready: false,
-    decks: [
-      {
-        "name": "deckA",
-        "id": "abc",
-        "cards": [
-          { "q": "quesitonA1", "a": "answerA1" },
-          { "q": "quesitonA2", "a": "answerA2" },
-          { "q": "quesitonA3", "a": "answerA3" }
-        ]
-      },
-      {
-        "name": "deckB",
-        "id": "abcd",
-        "cards": [
-          { "q": "quesitonB1", "a": "answerB1" },
-          { "q": "quesitonB2", "a": "answerB2" },
-          { "q": "quesitonB3", "a": "answerB3" }
-        ]
-      },
-      {
-        "name": "deckC",
-        "id": "abcde",
-        "cards": [
-          { "q": "quesitonC1", "a": "answerC1" },
-          { "q": "quesitonC2", "a": "answerC2" },
-          { "q": "quesitonC3", "a": "answerC3" }
-        ]
-      }
-    ]
   }
 
   componentDidMount() {
-    // const { dispatch }
+    const { dispatch } = this.props
+
+    // API
+    fetchDecks()
+      .then((decks) => dispatch(receiveDecks(decks)))
+      .then(() => this.setState(() => ({ ready: true })))
   }
 
   render() {
-    const { decks, ready } = this.state
+    const { decks } = this.props
+    const { ready } = this.state
+
+    if (ready === false) {
+      return <AppLoading />
+    }
 
     return (
       <View style={{ flex: 1 }}>
-        {decks.map(deck => {
-          const { name, id, cards } = deck
+        {Object.keys(decks).map(key => {
+          const { name, cards } = decks[key]
           return (
             <TouchableOpacity
-              style={styles.item} key={id}
-              onPress={() => this.props.navigation.navigate('ViewDeck', { id: id })}
+              style={styles.item}
+              key={key}
+              onPress={() => this.props.navigation.navigate('ViewDeck', { id: key })}
             >
               <Text style={{ fontSize: 20 }}>{name}</Text>
-              <Text style={{ fontSize: 16, color: gray }}>{cards.length} cards</Text>
+              {cards
+                ? (<Text style={{ fontSize: 16, color: gray }}>{cards.length} cards</Text>)
+                : (<Text style={{ fontSize: 16, color: gray }}>Tap to add cards</Text>)
+              }
             </TouchableOpacity>
           )
         })}
@@ -89,5 +79,10 @@ const styles = StyleSheet.create({
   }
 })
 
+function mapStateToProps(decks) {
+  return {
+    decks
+  }
+}
 
-export default ListDeck
+export default connect(mapStateToProps)(ListDeck)
