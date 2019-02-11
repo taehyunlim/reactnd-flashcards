@@ -50,10 +50,12 @@ class ViewDeck extends Component {
             <Text style={styles.buttonText}>Start Quiz</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.button, { backgroundColor: teal }]}
+            style={[styles.button, { backgroundColor: white }]}
             onPress={this.delete}
           >
-            <Text style={styles.buttonText}>Delete</Text>
+            <Text style={[styles.buttonText, { color: watermelon, fontSize: 15, paddingTop: 50 }]}>
+              Delete
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
