@@ -27,18 +27,20 @@ class AddDeck extends Component {
     const id = 'deck_' + timeToString()
     const deck = {
       "name": this.state.input.trim(),
-      "card": []
+      "cards": []
     }
 
+    // Redux
     this.props.dispatch(
       addDeck({
         [id]: deck
       })
     )
 
-    // To Do
+    // Navigates back to ListDeck
     this.props.navigation.goBack()
 
+    // API
     submitDeck({ id, deck });
 
     console.log("Submitted")
