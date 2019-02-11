@@ -1,38 +1,56 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { white, fresh, matte, watermelon, teal } from '../utils/colors'
-
+import { connect } from 'react-redux'
+import { deleteDeck } from '../utils/api'
 
 class ViewDeck extends Component {
-  static navigationOPtions = ({ navigation }) => {
-    const { id } = navigation.state.params
-    console.log(id)
 
-    return {
-      title: `Deck ID: ${id}`
-    }
+  static navigationOptions = ({ navigation }) => {
+    const { name } = navigation.state.params
+    return { title: `${name}` }
+  };
+
+  delete = (id) => {
+    deleteDeck(id)
   }
 
+  // shouldComponentUpdate(nextProps) {
+  //   return nextProps.id !== null && nextProps.deck
+  // }
+
   render() {
+
+    const { id, deck } = this.props
 
     return (
       <View style={styles.container}>
         <View style={styles.headerContainer}>
-          <Text style={styles.header}>View an Individual Deck</Text>
-          <Text style={styles.subHeader}>? cards</Text>
+          <Text style={styles.header}>{deck.name}</Text>
+          {deck.cards
+            ? (<Text style={styles.subHeader}>{deck.cards.length} cards</Text>)
+            : (<Text style={styles.subHeader}>Add new cards below</Text>)
+          }
+
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={[styles.button, { backgroundColor: teal }]}
-            onPress={() => this.props.navigation.navigate('AddCard', { id: "test" })}
+            onPress={() => this.props.navigation.navigate('AddCard', { id, name })}
           >
             <Text style={styles.buttonText}>Add Card</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.button, { backgroundColor: teal }]}
-            onPress={() => this.props.navigation.navigate('Quiz', { id: "test" })}
+            onPress={() => this.props.navigation.navigate('Quiz', { id, name })}
           >
             <Text style={styles.buttonText}>Start Quiz</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, { backgroundColor: teal }]}
+            onPress={() => this.delete(id)}
+          >
+            <Text style={styles.buttonText}>Delete</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -84,4 +102,20 @@ const styles = StyleSheet.create({
   }
 })
 
-export default ViewDeck
+function mapStateToProp(state, { navigation }) {
+  const { id } = navigation.state.params
+  return {
+    id,
+    deck: state[id]
+  }
+}
+
+function mapDispatchToProps(dispatch, { navigation }) {
+  const { id } = navigation.state.params
+  console.log(id)
+  return {
+    goBack: () => navigation.goBack()
+  }
+}
+
+export default connect(mapStateToProp, mapDispatchToProps)(ViewDeck)
