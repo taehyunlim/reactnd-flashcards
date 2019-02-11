@@ -56,11 +56,26 @@ export function submitDeck({ deck, id }) {
   )
 }
 
-export function deleteDeck(id) {
+export function deleteDeck(id, cb) {
   return AsyncStorage.getItem(DECK_STORAGE_KEY).then(res => {
     const data = JSON.parse(res)
     data[id] = undefined
     delete data[id]
     AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(data))
+      .then(() => { cb() })
   })
+}
+
+export function submitCard(id, card) {
+  AsyncStorage.getItem(DECK_STORAGE_KEY).then(res => {
+    const data = JSON.parse(res)
+    const newData = Object.assign({}, data, {
+      ...data,
+      [id]: {
+        ...data[id],
+        cards: data[id]["cards"] ? data[id]["cards"].concat([card]) : [].concat([card])
+      }
+    })
+    AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(newData))
+  }).done()
 }
