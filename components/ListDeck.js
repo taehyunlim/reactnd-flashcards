@@ -37,7 +37,7 @@ class ListDeck extends Component {
             <TouchableOpacity
               style={styles.item}
               key={key}
-              onPress={() => this.props.navigation.navigate('ViewDeck', { id: key })}
+              onPress={() => this.props.navigation.navigate('ViewDeck', { id: key, name: name })}
             >
               <Text style={{ fontSize: 20 }}>{name}</Text>
               {cards
