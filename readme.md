@@ -21,7 +21,7 @@ There are four main views:
 
 - Main (List of Decks)
 
-![List of Decks](assets/screenshots/1.png =250x)
+![List of Decks](assets/screenshots/1.png) { width: 200px; }
 
 - Deck (List of Cards) 
 - Quiz View
