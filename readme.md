@@ -20,8 +20,7 @@ The npm start command starts the Expo CLI server. [Expo app](https://expo.io/) i
 There are four main views:
 
 - Main (List of Decks)
-
-![List of Decks](assets/screenshots/1.png) { width: 200px; }
+<img src="assets/screenshots/1.png" width="250">
 
 - Deck (List of Cards) 
 - Quiz View
