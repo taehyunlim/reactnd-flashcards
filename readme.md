@@ -20,11 +20,18 @@ The npm start command starts the Expo CLI server. [Expo app](https://expo.io/) i
 There are four main views:
 
 - Main (List of Decks)
-<img src="assets/screenshots/1.png" width="250">
+<img src="assets/screenshots/1.png" width="250" style="padding-left: 30px;">
+- Add Deck / Add Card
+<img src="assets/screenshots/2.png" width="250" style="padding-left: 30px; padding-bottom: 10px;">
+<img src="assets/screenshots/3.png" width="250" style="padding-left: 30px; padding-bottom: 10px;">
+- Deck Options
+<img src="assets/screenshots/4.png" width="250" style="padding-left: 30px;">
+- Quiz 
+<img src="assets/screenshots/5.png" width="250" style="padding-left: 30px; padding-bottom: 10px;">
+<img src="assets/screenshots/6.png" width="250" style="padding-left: 30px; padding-bottom: 10px;">
+<img src="assets/screenshots/7.png" width="250" style="padding-left: 30px; padding-bottom: 10px;">
+<img src="assets/screenshots/8.png" width="250" style="padding-left: 30px; padding-bottom: 10px;">
 
-- Deck (List of Cards) 
-- Quiz View
-- Add Card / Add Deck
 
 ## Contributing and Licensing
 
